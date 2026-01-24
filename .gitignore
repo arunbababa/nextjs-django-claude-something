@@ -11,6 +11,8 @@ ENV/
 *.db
 *.sqlite3
 db.sqlite3
+staticfiles/
+media/
 
 # Node
 node_modules/
