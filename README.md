@@ -43,7 +43,43 @@ Next.js (フロントエンド) と Django (バックエンド) で作成した�
 - `PATCH /api/tasks/{id}/` - タスク部分更新
 - `DELETE /api/tasks/{id}/` - タスク削除
 
-## セットアップ
+## クイックスタート（推奨）
+
+シェルスクリプトを使って簡単に起動できます。
+
+### すべてを一括起動
+
+```bash
+./start-dev.sh
+```
+
+バックエンド (http://localhost:8000) とフロントエンド (http://localhost:3000) が同時に起動します。
+
+### 個別に起動
+
+**バックエンドのみ起動:**
+```bash
+./start-backend.sh
+```
+
+**フロントエンドのみ起動:**
+```bash
+./start-frontend.sh
+```
+
+停止する場合は `Ctrl+C` を押してください。
+
+---
+
+## セットアップ（手動）
+
+シェルスクリプトを使わない場合は、以下の手順で手動セットアップできます。
+
+### 前提条件
+
+- Python 3.11以上
+- Node.js 18以上
+- npm または yarn
 
 ### バックエンド（Django）
 
@@ -107,7 +143,13 @@ npm run dev
 
 ```
 .
-├── backend/                 # Djangoバックエンド
+├── start-dev.sh            # 一括起動スクリプト
+├── start-backend.sh        # バックエンド起動スクリプト
+├── start-frontend.sh       # フロントエンド起動スクリプト
+├── README.md               # このファイル
+├── DEPLOYMENT.md           # デプロイ手順
+│
+├── backend/                # Djangoバックエンド
 │   ├── config/             # Django設定
 │   ├── authentication/     # 認証アプリ
 │   ├── users/              # ユーザーアプリ
