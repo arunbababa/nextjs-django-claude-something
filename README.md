@@ -1,8 +1,8 @@
 # タスク管理アプリケーション
 
-Next.js (フロントエンド) と Django/Go (バックエンド) で作成したタスク管理アプリケーションです。
+Next.js (フロントエンド) と Django/Go/Jakarta EE (バックエンド) で作成したタスク管理アプリケーションです。
 
-**バックエンドは Django と Go の2つの実装があります。** どちらも同じAPIを提供しており、好みに応じて選択できます。
+**バックエンドは Django、Go、Jakarta EE の3つの実装があります。** どれも同じAPIを提供しており、好みに応じて選択できます。
 
 ## 機能
 
@@ -22,13 +22,22 @@ Next.js (フロントエンド) と Django/Go (バックエンド) で作成し�
 - SQLite データベース
 - CORS設定
 
-### バックエンド (Go) - 新規追加
+### バックエンド (Go)
 - Go 1.21+
 - Gin (高性能HTTPフレームワーク)
 - GORM (ORM)
 - Token認証
 - SQLite / PostgreSQL対応
 - CORS設定
+
+### バックエンド (Jakarta EE) - 新規追加
+- Java 17+
+- Jakarta EE 10
+- JAX-RS (REST API)
+- JPA + Hibernate
+- CDI (依存性注入)
+- Payara Micro
+- H2 / PostgreSQL対応
 
 ### フロントエンド
 - Next.js 16 (App Router)
@@ -99,7 +108,27 @@ go run ./cmd/server
 
 Goバックエンドは `http://localhost:8080` で起動します。
 
-> **Note**: DjangoとGoのバックエンドは同じAPIを提供しています。フロントエンドの `NEXT_PUBLIC_API_URL` を切り替えることで、どちらのバックエンドも使用できます。
+> **Note**: Django、Go、Jakarta EEのバックエンドは全て同じAPIを提供しています。フロントエンドの `NEXT_PUBLIC_API_URL` を切り替えることで、どのバックエンドも使用できます。
+
+### バックエンド（Jakarta EE）
+
+1. Jakarta EEバックエンドディレクトリに移動:
+```bash
+cd jakarta-backend
+```
+
+2. 開発サーバーを起動（簡単な方法）:
+```bash
+./dev.sh
+```
+
+または、手動で起動:
+```bash
+mvn clean package -DskipTests
+mvn payara-micro:start
+```
+
+Jakarta EEバックエンドは `http://localhost:8081` で起動します。
 
 ### フロントエンド（Next.js）
 
@@ -146,7 +175,7 @@ npm run dev
 │   ├── tasks/              # タスクアプリ
 │   └── manage.py
 │
-├── go-backend/             # Goバックエンド ★新規追加
+├── go-backend/             # Goバックエンド
 │   ├── cmd/server/         # エントリーポイント
 │   ├── internal/
 │   │   ├── config/        # 設定管理
@@ -154,6 +183,17 @@ npm run dev
 │   │   ├── handlers/      # APIハンドラー
 │   │   ├── middleware/    # ミドルウェア
 │   │   └── models/        # データモデル
+│   ├── start.sh           # 起動スクリプト
+│   └── dev.sh             # 開発用スクリプト
+│
+├── jakarta-backend/        # Jakarta EEバックエンド ★新規追加
+│   ├── src/main/java/
+│   │   └── com/taskapp/
+│   │       ├── entity/    # JPAエンティティ
+│   │       ├── resource/  # JAX-RSリソース
+│   │       ├── service/   # ビジネスロジック
+│   │       ├── repository/ # データアクセス
+│   │       └── filter/    # フィルター
 │   ├── start.sh           # 起動スクリプト
 │   └── dev.sh             # 開発用スクリプト
 │

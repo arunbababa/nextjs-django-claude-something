@@ -10,6 +10,23 @@ go-backend/db.sqlite3
 go.work
 go.work.sum
 
+# Java/Maven
+jakarta-backend/target/
+jakarta-backend/data/
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+
 # Python
 *.pyc
 __pycache__/

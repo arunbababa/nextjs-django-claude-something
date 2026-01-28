@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="3.0" xmlns="https://jakarta.ee/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence
+             https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd">
+
+    <persistence-unit name="TaskAppPU" transaction-type="JTA">
+        <jta-data-source>java:comp/DefaultDataSource</jta-data-source>
+
+        <class>com.taskapp.entity.User</class>
+        <class>com.taskapp.entity.Task</class>
+        <class>com.taskapp.entity.Token</class>
+
+        <properties>
+            <!-- Hibernate Settings -->
+            <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+
+            <!-- Connection pool -->
+            <property name="hibernate.connection.pool_size" value="5"/>
+
+            <!-- Timezone -->
+            <property name="hibernate.jdbc.time_zone" value="Asia/Tokyo"/>
+        </properties>
+    </persistence-unit>
+
+</persistence>
