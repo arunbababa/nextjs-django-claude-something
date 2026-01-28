@@ -1,3 +1,15 @@
+# Go
+go-backend/bin/
+go-backend/db.sqlite3
+*.exe
+*.exe~
+*.dll
+*.dylib
+*.test
+*.out
+go.work
+go.work.sum
+
 # Python
 *.pyc
 __pycache__/

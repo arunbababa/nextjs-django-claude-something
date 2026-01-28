@@ -1,6 +1,8 @@
 # タスク管理アプリケーション
 
-Next.js (フロントエンド) と Django (バックエンド) で作成したタスク管理アプリケーションです。
+Next.js (フロントエンド) と Django/Go (バックエンド) で作成したタスク管理アプリケーションです。
+
+**バックエンドは Django と Go の2つの実装があります。** どちらも同じAPIを提供しており、好みに応じて選択できます。
 
 ## 機能
 
@@ -13,11 +15,19 @@ Next.js (フロントエンド) と Django (バックエンド) で作成した�
 
 ## 技術スタック
 
-### バックエンド
+### バックエンド (Django)
 - Django 5.0.1
 - Django REST Framework
 - Token認証
 - SQLite データベース
+- CORS設定
+
+### バックエンド (Go) - 新規追加
+- Go 1.21+
+- Gin (高性能HTTPフレームワーク)
+- GORM (ORM)
+- Token認証
+- SQLite / PostgreSQL対応
 - CORS設定
 
 ### フロントエンド
@@ -69,6 +79,28 @@ python manage.py runserver
 
 バックエンドは `http://localhost:8000` で起動します。
 
+### バックエンド（Go）
+
+1. Goバックエンドディレクトリに移動:
+```bash
+cd go-backend
+```
+
+2. 開発サーバーを起動（簡単な方法）:
+```bash
+./dev.sh
+```
+
+または、手動で起動:
+```bash
+go mod download
+go run ./cmd/server
+```
+
+Goバックエンドは `http://localhost:8080` で起動します。
+
+> **Note**: DjangoとGoのバックエンドは同じAPIを提供しています。フロントエンドの `NEXT_PUBLIC_API_URL` を切り替えることで、どちらのバックエンドも使用できます。
+
 ### フロントエンド（Next.js）
 
 1. フロントエンドディレクトリに移動:
@@ -113,6 +145,17 @@ npm run dev
 │   ├── users/              # ユーザーアプリ
 │   ├── tasks/              # タスクアプリ
 │   └── manage.py
+│
+├── go-backend/             # Goバックエンド ★新規追加
+│   ├── cmd/server/         # エントリーポイント
+│   ├── internal/
+│   │   ├── config/        # 設定管理
+│   │   ├── database/      # DB接続
+│   │   ├── handlers/      # APIハンドラー
+│   │   ├── middleware/    # ミドルウェア
+│   │   └── models/        # データモデル
+│   ├── start.sh           # 起動スクリプト
+│   └── dev.sh             # 開発用スクリプト
 │
 └── frontend/               # Next.jsフロントエンド
     ├── app/                # App Router
