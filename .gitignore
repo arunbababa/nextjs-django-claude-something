@@ -1,3 +1,8 @@
+# Rust
+rust-backend/target/
+rust-backend/data.db
+rust-backend/Cargo.lock
+
 # Go
 go-backend/bin/
 go-backend/db.sqlite3

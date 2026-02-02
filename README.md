@@ -1,8 +1,10 @@
 # タスク管理アプリケーション
 
-Next.js (フロントエンド) と Django/Go/Jakarta EE (バックエンド) で作成したタスク管理アプリケーションです。
+Next.js (フロントエンド) と Django/Go/Jakarta EE/Rust (バックエンド) で作成したタスク管理アプリケーションです。
 
-**バックエンドは Django、Go、Jakarta EE の3つの実装があります。** どれも同じAPIを提供しており、好みに応じて選択できます。
+**バックエンドは Django、Go、Jakarta EE、Rust の4つの実装があります。** どれも同じタスク管理APIを提供しており、好みに応じて選択できます。
+
+**★ Rustバックエンドにはお金の貸し借り管理機能も追加されています。**
 
 ## 機能
 
@@ -30,7 +32,7 @@ Next.js (フロントエンド) と Django/Go/Jakarta EE (バックエンド) �
 - SQLite / PostgreSQL対応
 - CORS設定
 
-### バックエンド (Jakarta EE) - 新規追加
+### バックエンド (Jakarta EE)
 - Java 17+
 - Jakarta EE 10
 - JAX-RS (REST API)
@@ -38,6 +40,14 @@ Next.js (フロントエンド) と Django/Go/Jakarta EE (バックエンド) �
 - CDI (依存性注入)
 - Payara Micro
 - H2 / PostgreSQL対応
+
+### バックエンド (Rust) - 新規追加
+- Rust 1.70+
+- Actix-web 4 (高性能HTTPフレームワーク)
+- SQLx (非同期DB)
+- Token認証 (Argon2)
+- SQLite / PostgreSQL対応
+- ★ お金の貸し借り管理機能
 
 ### フロントエンド
 - Next.js 16 (App Router)
@@ -108,7 +118,7 @@ go run ./cmd/server
 
 Goバックエンドは `http://localhost:8080` で起動します。
 
-> **Note**: Django、Go、Jakarta EEのバックエンドは全て同じAPIを提供しています。フロントエンドの `NEXT_PUBLIC_API_URL` を切り替えることで、どのバックエンドも使用できます。
+> **Note**: Django、Go、Jakarta EE、Rustのバックエンドは全て同じタスク管理APIを提供しています。フロントエンドの `NEXT_PUBLIC_API_URL` を切り替えることで、どのバックエンドも使用できます。Rustバックエンドにはお金の貸し借り管理APIも追加されています。
 
 ### バックエンド（Jakarta EE）
 
@@ -129,6 +139,31 @@ mvn payara-micro:start
 ```
 
 Jakarta EEバックエンドは `http://localhost:8081` で起動します。
+
+### バックエンド（Rust）
+
+1. Rustバックエンドディレクトリに移動:
+```bash
+cd rust-backend
+```
+
+2. 開発サーバーを起動（簡単な方法）:
+```bash
+./dev.sh
+```
+
+または、手動で起動:
+```bash
+cargo run
+```
+
+Rustバックエンドは `http://localhost:8082` で起動します。
+
+**★ Rustバックエンドの追加機能: お金の貸し借り管理API**
+- `GET /api/debts/` - 貸し借り一覧
+- `POST /api/debts/` - 貸し借りを記録
+- `POST /api/debts/:id/settle/` - 精算済みにする
+- `GET /api/debts/summary/` - サマリー取得
 
 ### フロントエンド（Next.js）
 
@@ -186,7 +221,7 @@ npm run dev
 │   ├── start.sh           # 起動スクリプト
 │   └── dev.sh             # 開発用スクリプト
 │
-├── jakarta-backend/        # Jakarta EEバックエンド ★新規追加
+├── jakarta-backend/        # Jakarta EEバックエンド
 │   ├── src/main/java/
 │   │   └── com/taskapp/
 │   │       ├── entity/    # JPAエンティティ
@@ -194,6 +229,15 @@ npm run dev
 │   │       ├── service/   # ビジネスロジック
 │   │       ├── repository/ # データアクセス
 │   │       └── filter/    # フィルター
+│   ├── start.sh           # 起動スクリプト
+│   └── dev.sh             # 開発用スクリプト
+│
+├── rust-backend/           # Rustバックエンド ★新規追加
+│   ├── src/
+│   │   ├── handlers/      # APIハンドラー
+│   │   ├── models/        # データモデル
+│   │   ├── middleware/    # ミドルウェア
+│   │   └── routes/        # ルーティング
 │   ├── start.sh           # 起動スクリプト
 │   └── dev.sh             # 開発用スクリプト
 │
@@ -223,4 +267,16 @@ Djangoの組み込みUserモデルを使用
 - `completed` - 完了フラグ
 - `created_at` - 作成日時
 - `updated_at` - 更新日時
+- `user` - ユーザーID（外部キー）
+
+### Debtテーブル（Rustバックエンドのみ）★新規
+- `id` - 主キー
+- `counterparty` - 相手の名前
+- `amount` - 金額（円）
+- `debt_type` - 種類（lent: 貸した / borrowed: 借りた）
+- `description` - メモ・理由
+- `is_settled` - 精算済みフラグ
+- `created_at` - 作成日時
+- `updated_at` - 更新日時
+- `settled_at` - 精算日時
 - `user` - ユーザーID（外部キー）

@@ -1,0 +1,46 @@
+[package]
+name = "rust-backend"
+version = "1.0.0"
+edition = "2021"
+description = "Task management and debt tracking API backend using Rust"
+authors = ["Task App"]
+
+[dependencies]
+# Web Framework
+actix-web = "4"
+actix-rt = "2"
+actix-cors = "0.7"
+
+# Serialization
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+# Database
+sqlx = { version = "0.7", features = ["runtime-tokio", "sqlite", "postgres", "chrono"] }
+
+# Async Runtime
+tokio = { version = "1", features = ["full"] }
+
+# Password Hashing
+argon2 = "0.5"
+rand = "0.8"
+
+# Environment Variables
+dotenvy = "0.15"
+
+# Date/Time
+chrono = { version = "0.4", features = ["serde"] }
+
+# Logging
+env_logger = "0.11"
+log = "0.4"
+
+# Token Generation
+hex = "0.4"
+
+# Validation
+validator = { version = "0.16", features = ["derive"] }
+
+[profile.release]
+opt-level = 3
+lto = true
